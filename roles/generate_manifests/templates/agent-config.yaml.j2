@@ -17,7 +17,7 @@ hosts:
   {% endif %}
   {% if hostvars[hostname]['root_device_hints'] | default({}) | length > 0 %}
     rootDeviceHints:
-    {% for key, rdh in hostvars[hostname]['root_device_hints'] %}
+    {% for key, rdh in hostvars[hostname]['root_device_hints'].items() %}
       {{ key }}: {{ rdh }}
     {% endfor %}
   {% endif %}
