@@ -13,8 +13,8 @@ hosts:
         macAddress: {{ network_config.mac_interface_map[0].mac_address }}
     networkConfig:
       {{ network_config.network_yaml | indent(6) }}
-  {% if 'root_device_hint' in hostvars[hostname] and 'root_device_hint_value' in hostvars[hostname] and hostvars[hostname]['root_device_hint'] in roothint_list %}
+{% endfor %}
+{% if 'root_device_hint' in hostvars[hostname] and 'root_device_hint_value' in hostvars[hostname] and hostvars[hostname]['root_device_hint'] in roothint_list %}
     rootDeviceHints:
       {{ hostvars[hostname]['root_device_hint'] }}: '{{ hostvars[hostname]['root_device_hint_value'] }}'
-  {% endif %}
-{% endfor %}
+{% endif %}
