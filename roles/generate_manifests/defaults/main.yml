@@ -30,3 +30,15 @@ api_vips: "{% if extra_api_vip is defined %}{{ [api_vip] + [extra_api_vip] }}{% 
 ingress_vips: "{% if extra_ingress_vip is defined %}{{ [ingress_vip] + [extra_ingress_vip] }}{% else %}{{ [ingress_vip] }}{% endif %}"
 
 ocp_version_major: "{{ openshift_version }}"
+roothint_list:
+  - deviceName
+  - hctl
+  - model
+  - vendor
+  - serialNumber
+  - minSizeGigabytes
+  - wwn
+  - wwnWithExtension
+  - wwnVendorExtension
+  - rotational
+  - ''
