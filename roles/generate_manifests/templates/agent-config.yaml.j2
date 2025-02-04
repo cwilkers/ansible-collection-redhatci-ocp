@@ -15,12 +15,12 @@ hosts:
     networkConfig:
       {{ static_network_config[hostname].network_yaml | indent(6) }}
   {% endif %}
-  {% if hostvars[hostname]['root_device_hints'] | length > 0 or hostvars[hostname]['installation_disk_path'] is defined %}
+  {% if hostvars[hostname]['root_device_hints'] | default({}) | length > 0 or hostvars[hostname]['installation_disk_path'] is defined %}
     rootDeviceHints:
     {% if hostvars[hostname]['installation_disk_path'] is defined %}
       deviceName: {{ hostvars[hostname]['installation_disk_path'] }}
     {% else %}
-      {% for key, rdh in hostvars[hostname]['root_device_hints'].items() %}
+      {% for key, rdh in (hostvars[hostname]['root_device_hints'] | default({})).items() %}
       {{ key }}: {{ rdh }}
       {% endfor %}
     {% endif %}
