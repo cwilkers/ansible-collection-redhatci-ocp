@@ -14,7 +14,7 @@ All of the variables have sane defaults which you can override to force things, 
 | extra_manifest_dir            | $MANIFESTS_DIR/openshift          | No        | Path for extra manifests |
 | static_network_config         | {}                                | No        | Static network config for every node |
 | installation_disk_path        |                                   | No        | Disk to use for install if you don't want the first found disk |
-| root_device_hints             | {}                                | No        | Install device hints per node, in case installation_disk_path is not enough |
+| root_device_hints             | {}                                | No        | Install device hints [^1] per node, in case installation_disk_path is not enough |
 | use_local_mirror_registry     | true                              | No        | Use the configured mirror registry |
 | mirror_registry               | $REGISTRY_HOST_FQDN:5000          | No        | Local container image mirror |
 | ocp_registry_namespace        | ocp4                              | No        | Namespace for image mirror |
@@ -39,3 +39,5 @@ All of the variables have sane defaults which you can override to force things, 
   ansible.builtin.include_role:
     name: redhatci.ocp.generate_manifests
 ```
+
+[^1]: As per the [OCP 4.17 docs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.17/html-single/installing_an_on-premise_cluster_with_the_agent-based_installer/index#installing-ocp-agent-inputs_installing-with-agent-based-installer)
