@@ -16,7 +16,8 @@ All of the variables have sane defaults which you can override to force things, 
 | installation_disk_path        |                                   | No        | Disk to use for install if you don't want the first found disk |
 | root_device_hints             | {}                                | No        | Install device hints per node, in case installation_disk_path is not enough |
 | use_local_mirror_registry     | true                              | No        | Use the configured mirror registry |
-| mirror_registry               | $REGISTRY_HOST_FQDN:5000          | No        | Local container image mirror | | ocp_registry_namespace        | ocp4                              | No        | Namespace for image mirror |
+| mirror_registry               | $REGISTRY_HOST_FQDN:5000          | No        | Local container image mirror |
+| ocp_registry_namespace        | ocp4                              | No        | Namespace for image mirror |
 | ocp_registry_image            | openshift4                        | No        | Name for image in the image mirror |
 | single_node_openshift_enabled | false                             | No        | Install OCP in single-node mode |
 
