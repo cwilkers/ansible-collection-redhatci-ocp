@@ -25,6 +25,7 @@ czga_multicluster_version   | string | yes      | -                             
 czga_site_generator_image   | string | no       | `registry.redhat.io/openshif4/ztp-site-generate-rhel8` | ZTP site generator container image
 czga_multicluster_image     | string | no       | `registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9` | Multicluster operators subscription container image
 czga_podman_runner_host     | string | no       | podman-runner                                      |  Identity of the inventory host pulling the sites template generator image.
+czga_clusters_list          | list of strings | no | undefined                                       | List of clusters to be deployed.
 czga_clusters_namespace     | string | no       | cluster-sub                                        | Namespace for the site config resources.
 czga_kubeconfig_path        | string | no       | `{{ omit }}`                                       | Path to the ACM hub kubeconfig file.
 czga_ocp_pull_secret        | string | yes      | -                                                  | Pull secret for the Spoke cluster.
