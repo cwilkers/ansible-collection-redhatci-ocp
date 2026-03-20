@@ -49,9 +49,40 @@ sno_extnet_ip # IP address to use on the SNO node from "extcidrnet"
 - ipmi_user  # User with administrator privileges
 - ipmi_password  # Password of the BMC user
 - ipmi_port  # Port of the BMC console
-- baremetal_mac  # MAC address of the Baremetal NIC 
+- baremetal_mac  # MAC address of the Baremetal NIC
 - extcidrrouter  # define the gateway to use
 - extcidrdns  # IP address of the DNS server
+
+### BMC Protocol Selection
+
+The SNO installer supports two BMC management protocols for bare metal deployments:
+
+#### IPMI Protocol (Default)
+Uses traditional IPMI commands via `ipmitool` for BMC operations. This is the default behavior.
+
+```yaml
+bmc_protocol: "ipmi"  # Optional: IPMI is the default
+```
+
+#### Redfish Protocol
+Uses modern Redfish API for BMC operations. Recommended for newer BMCs that have IPMI compatibility issues.
+
+```yaml
+bmc_protocol: "redfish"
+```
+
+**Redfish Configuration:**
+- Uses the same BMC credentials as IPMI: `ipmi_address`, `ipmi_user`, `ipmi_password`
+- Alternatively, you can use dedicated Redfish variables: `bmc_address`, `bmc_user`, `bmc_password`
+- Requires HTTPS connectivity to the BMC Redfish API endpoint
+- Automatically handles PXE boot configuration and power management via RESTful API calls
+- Compatible with modern BMCs including Supermicro AST2600, Dell iDRAC, HPE iLO
+
+**When to use Redfish:**
+- When IPMI commands fail with "invalid role" or authentication errors
+- For modern BMCs that have better Redfish implementation than IPMI
+- When corporate security policies restrict IPMI usage
+- For BMCs that don't support IPMI ADMINISTRATOR privilege level
 
 
 ### DNS Entries Required

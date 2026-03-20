@@ -107,12 +107,22 @@
         loop_var: host
       tags: install
 
-- name: Deploy SNO on bare metal
+- name: Deploy SNO on bare metal with IPMI
   ansible.builtin.include_tasks: 60_deploy_sno_bm.yml
   tags: install_bm
   when:
     - sno_install_type is defined
     - sno_install_type == "baremetal"
+    - (bmc_protocol is undefined) or (bmc_protocol == "ipmi")
+
+- name: Deploy SNO on bare metal with Redfish
+  ansible.builtin.include_tasks: 60_deploy_sno_redfish.yml
+  tags: install_bm
+  when:
+    - sno_install_type is defined
+    - sno_install_type == "baremetal"
+    - bmc_protocol is defined
+    - bmc_protocol == "redfish"
 
 - name: Wait for deployment to complete
   ansible.builtin.include_tasks: 70_wait_deployment.yml

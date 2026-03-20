@@ -9,6 +9,11 @@ url_passed: false
 tftp_dir: "/var/lib/tftpboot"
 dnsmasq_enabled: true
 
+# BMC Protocol configuration for bare metal deployments
+# Use "ipmi" for traditional IPMI-based BMC control (default)
+# Use "redfish" for modern Redfish API-based BMC control
+# bmc_protocol: "ipmi"  # Default: IPMI (can be overridden in inventory)
+
 si_cache_server: "{{ inventory_hostname }}"
 si_cache_server_major_version: "{{ ansible_distribution_major_version }}"
 si_cache_server_user_id: "{{ ansible_user_id }}"
