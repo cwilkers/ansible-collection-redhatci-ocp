@@ -55,7 +55,7 @@ find -type f ! -executable -name '*.py' -print -exec sed -i -e '1{\@^#!.*@d}' '{
 
 %changelog
 
-* Thu March  5 2026 Beto Rdz <joearod@redhat.com> - 2.21.EPOCH-VERS
+* Thu Mar 5 2026 Beto Rdz <josearod@redhat.com> - 2.21.EPOCH-VERS
 - Use oc-mirror in mirror_ocp_release
 
 * Thu Feb  5 2026 Frederic Lepied <flepied@redhat.com> - 2.20.EPOCH-VERS
