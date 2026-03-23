@@ -30,7 +30,7 @@
         var: ni_ready_node_names
       when: ni_ready_node_names is defined
 
-    #switch oc context to default namespace for collecting hw data
+    # Switch oc context to default namespace for collecting hw data
     - name: Get kernel information for all nodes
       ansible.builtin.shell:
         cmd: >
@@ -125,7 +125,7 @@
           }}
       ansible.builtin.shell:
         cmd: >
-          {{ ni_oc_tool_path }} debug node/{{ node_name }}
+          {{ ni_oc_tool_path }} debug node/{{ node_name }} -n default
           --image={{ _ni_hw_img }}
           --
           bash -c "${preinstall} lshw -json -sanitize -numeric"
