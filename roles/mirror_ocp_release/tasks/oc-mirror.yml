@@ -1,4 +1,32 @@
 ---
+- name: "Get release image digest"
+  ansible.builtin.set_fact:
+    mor_release_image_digest: "{{ mor_pull_url.split('@') | last | trim }}"
+  when: mor_pull_url is search('@sha[0-9]+:')
+
+- name: "Inspect release image to get digest when reference has a tag"
+  ansible.builtin.command: >
+    skopeo inspect
+    --no-tags
+    --authfile {{ mor_auths_file }}
+    {%- if mor_allow_insecure_registry | bool %}
+    --tls-verify=false
+    {%- endif %}
+    --format '{{ "{{" }} .Digest {{ "}}" }}'
+    docker://{{ mor_pull_url | regex_replace('^docker://', '') }}
+  register: _mor_skopeo_pull_digest
+  changed_when: false
+  when:
+    - not (mor_pull_url is search('@sha[0-9]+:'))
+
+- name: "Set mor_release_image_digest from skopeo (tag reference)"
+  ansible.builtin.set_fact:
+    mor_release_image_digest: "{{ _mor_skopeo_pull_digest.stdout | trim }}"
+  when:
+    - not (mor_pull_url is search('@sha[0-9]+:'))
+    - _mor_skopeo_pull_digest is defined
+    - _mor_skopeo_pull_digest.rc == 0
+
 - name: Check if the release image is pullable from the local registry
   ansible.builtin.command: >
     skopeo inspect
@@ -7,7 +35,7 @@
     {%- if mor_allow_insecure_registry | bool %}
     --tls-verify=false
     {%- endif %}
-    docker://{{ mor_registry_url }}/{{ mor_registry_path }}/openshift/release-images:{{ mor_version }}-x86_64
+    docker://{{ mor_registry_url }}/{{ mor_registry_path }}/openshift/release-images@{{ mor_release_image_digest }}
   register: _mor_release_image
   failed_when: false
   when: not mor_force | bool
